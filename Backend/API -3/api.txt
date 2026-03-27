@@ -1,0 +1,32 @@
+----------------------------------------------- API -----------------------------------------------
+
+What is API --
+
+An API (Application Programming Interface) is a set of rules and protocols 
+that allow different software applications to communicate with each other and exchange data.
+
+API type is REST ----
+
+REST (Representational State Transfer): The most common and flexible style for web APIs, 
+using standard HTTP methods (GET, POST, PUT, DELETE) and typically data in JSON or XML format.
+
+
+Protool ---- 
+
+REST always works with HTTP/HTTPs ,otherwise it doesn't works
+
+Life working example ----
+
+Instagram on your phone fetch user data from meta server this communication is done by API call on HTTPs protocol ...
+
+The four main types of operations/methods in a REST API are: ---- 
+
+GET: This method is used to retrieve data or a representation of a resource from a server. 
+It should only fetch data and have no other effect (it is a "safe" method).
+
+POST: This method is used to create new resources or submit data to the server. Upon successful creation, 
+it typically returns a status code of 201 Created.
+
+PUT: This method is used to update an existing resource by replacing its entire representation with the data provided in the request body.
+
+DELETE: This method is used to remove a specific resource from the server, identified by its URI. 

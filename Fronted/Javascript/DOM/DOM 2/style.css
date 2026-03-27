@@ -1,0 +1,128 @@
+/* *, *::before, *::after {
+  box-sizing: border-box;
+  
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%; 
+}
+
+body {
+  margin: 0; 
+  font-family: sans-serif;
+  margin-top: 100px;
+  background: black;
+}
+
+main{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#card{
+  height: 250px;
+  width: 250px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#bar{
+  height: 20px;
+  margin: 20px 20px;
+  background-color: green;
+  border-radius: 20px ;
+}
+
+#card p{
+    text-align: center;
+    margin-bottom: 20px ;
+}
+
+#outer{
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+button{
+  background-color: red;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+} 
+ */
+
+ *, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.15; /* Default line height */
+  -webkit-text-size-adjust: 100%; /* Prevent text size adjustment on mobile */
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0; /* Remove default body margin */
+  font-family: sans-serif; /* Set a default sans-serif font */
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+main{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  border: 2px solid white;
+}
+
+#card{
+  height: 350px;
+  width: 450px;
+  background-color: grey;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#bar{
+  height: 20px;
+  margin: 20px 20px;
+  background-color: green;
+  border-radius: 10px ;
+}
+
+#outer{
+  display: flex;
+  justify-content: space-around;
+}
+
+button{
+  background-color: red;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
