@@ -1,5 +1,4 @@
-const express = require('express') // packages stored in express var
-
+const express = require('express')  // require express package and store it in variable
 const app = express(); // server initializes / created and stored in app
 
 app.use(express.json());
@@ -17,22 +16,40 @@ app.post('/createPost',(req, res) => {
         description,
         author
     })
+
+    res.status(201).json({
+        message: "Note is created sucessfully"
+    })
     console.log('Post is created...')
-    res.send('Post is created successfully...')
 })
 
 app.get('/viewPost', (req, res) => {
-    res.json(Posts)
+    res.status(200).json({
+        message: "Post are available...",
+        data: Posts
+    })
     console.log(Posts)
-    console.log("Post are available...")
 })
 
 app.patch('/updatePost/:index', (req, res) => {  
     const Index = req.params.index                          // Partially updates the post means just a pieace from note
     Posts [Index].description = req.body.description
     
+    res.status(200).json({
+        message: "post is updated..."
+    })
+
     console.log("Your new post - ", req.body)
-    console.log("post is updated...")
+})
+
+app.delete('/deletePost/:index', (req, res) => {
+    const Index = req.params.index
+    delete Posts[Index]
+
+    res.status(200).json({
+        message: "Post is successfully deleted.."
+    })
+
 })
 
 app.listen(3000,()=>{
