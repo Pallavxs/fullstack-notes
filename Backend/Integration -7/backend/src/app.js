@@ -55,5 +55,11 @@ app.patch('/api/notes/:id', async (req,res) => {
     })
 })
 
+// wild card
+
+app.use("*name", (req,res ) => {
+    res.sendFile(path.join(_dirname, "..", "/public/index/html"))
+})
+
 
 module.exports = app
