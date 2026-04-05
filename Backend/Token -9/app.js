@@ -4,4 +4,4 @@ const db = require('./config/db')
 
 db()
 
-module.exports = app
+module.exports = app;

@@ -19,5 +19,6 @@ build/
 # Ignore folders
 Project/
 Real project/
+Projects/
 
 .env 

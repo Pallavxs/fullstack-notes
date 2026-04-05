@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username : {
         typeof : String,
         required : [true,"username is required"],
@@ -14,7 +14,8 @@ const userSchema = mongoose.Schema({
     password : {
         typeof : String,
         required : [true, "password is needed"],
-        unique : [true, "password must be unique"]
+        unique : [true, "password must be unique"],
+        Select : false
     } 
 });
 

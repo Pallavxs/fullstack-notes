@@ -9,4 +9,7 @@ userRoute.post('/register',authController.userCreation)
 
 userRoute.post('/login',authController.userLoggin)
 
-userRoute.post('/getMe/',authMiddleware.getMe)
+userRoute.post('/getMe/',authMiddleware.getMe. authController.getMe)
+
+userRoute.get('/logout',authController.logOut)
+

@@ -1,8 +1,8 @@
 const userModel = require('../model/user.model');
-const express = require('express')
 const jwt = require('jsonwebtoken')
 const cookie = require('cookie-parser')
 const bcrypt = require('bcrypt')
+const blackListModel = require('./model/blacklist')
 
 
 async function userCreation(req, res){
@@ -69,4 +69,28 @@ async function userLoggin(req,res){
     })
 }
 
-module.exports = {userCreation, userLoggin}
+async function getMe(req,res) {
+    const user = await userModel.findById(req.user.id)
+
+    res.status(200).json({
+        message : "User fetched sucessfully",
+        user
+    })
+}
+
+async function logOut(res,res) {
+    const token = req.cookies.token;
+
+    res.clearCookie(token)
+
+    await blackListModel.create({
+        token 
+    })
+
+    res.status(200).json({
+        message : "User successfully logout"
+    })
+    
+}
+
+module.exports = {userCreation, userLoggin, getMe, logOut}
