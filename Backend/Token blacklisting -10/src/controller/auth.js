@@ -20,7 +20,7 @@ async function userCreation(req, res){
 
     const user = await userModel.create({
         username, email, password : hashPass
-    })
+    }).select("+password")
 
     const token = jwt.sign({
         id : user._id,
