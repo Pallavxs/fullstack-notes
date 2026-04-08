@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 function connectToDb(){
-    mongoose.connect(process.env.Mongo_Link_compass)
+    mongoose.connect(process.env.Mongo_Link)
     .then(()=>{
         console.log('Database is running...')
     })

@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const userModel = require('./model/user.model')
+const userModel = require('../model/userModel')
 const userRoute = express.Router();
 
 userRoute.post('/register', async (req,res) => {
@@ -15,7 +15,7 @@ userRoute.post('/register', async (req,res) => {
         })
     }
 
-    const hashPassword = bcrypt.hash(password, 10) 
+    const hashPassword = await bcrypt.hash(password, 10) 
 
     const user = await userModel.create({
         username, email, password : hashPassword
@@ -34,7 +34,7 @@ userRoute.post('/register', async (req,res) => {
     })
 })
 
-userRoute.post('/login', async (req,res) => {
+userRoute.get('/login', async (req,res) => {
     const { email, password }  = req.body
 
     const user = await userModel.findOne({ email })
@@ -45,7 +45,7 @@ userRoute.post('/login', async (req,res) => {
         })
     }
 
-    isMatch = await bcrypt.compare(password, user.password)
+    isMatch = bcrypt.compare(password, user.password)
 
     if (!isMatch) {
         res.status(401).json({

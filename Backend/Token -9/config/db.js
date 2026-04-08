@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const db = () => {
-    mongoose.connect('mongodb+srv://viratd918_db_user:virat@cluster0.0rpr6m9.mongodb.net/Mydbname')
+    mongoose.connect('mongodb+srv://aqua:7IpGkCyX53X9Raf1@cluster0.hvnoz1f.mongodb.net/API')
     .then(()=>{
         console.log('database is connected')
     })

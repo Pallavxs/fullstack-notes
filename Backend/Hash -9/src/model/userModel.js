@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     username : String,
     email : {
-        typeof : String,
+        type : String,
         unique : [true,"This email is already stored..."]
     },
-    password : Number
+    password : String
 })
 
 const userModel = mongoose.model("User Hash", userSchema)

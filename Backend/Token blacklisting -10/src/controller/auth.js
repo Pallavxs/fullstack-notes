@@ -2,7 +2,7 @@ const userModel = require('../model/user.model');
 const jwt = require('jsonwebtoken')
 const cookie = require('cookie-parser')
 const bcrypt = require('bcrypt')
-const blackListModel = require('./model/blacklist')
+const blackListModel = require("../model/blacklist")
 
 
 async function userCreation(req, res){
@@ -16,11 +16,11 @@ async function userCreation(req, res){
         })
     }
 
-    const hashPass = bcrypt.hash(password,10)
+    const hashPass = await bcrypt.hash(password,10)
 
     const user = await userModel.create({
         username, email, password : hashPass
-    }).select("+password")
+    })
 
     const token = jwt.sign({
         id : user._id,
@@ -35,7 +35,6 @@ async function userCreation(req, res){
     })
 
 }
-
 
 async function userLoggin(req,res){
     const { email , password} = req.body;
@@ -78,7 +77,7 @@ async function getMe(req,res) {
     })
 }
 
-async function logOut(res,res) {
+async function logOut(req,res) {
     const token = req.cookies.token;
 
     res.clearCookie(token)
