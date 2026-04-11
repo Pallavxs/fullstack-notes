@@ -5,9 +5,9 @@ const express = require('express')
 
 const userRoute = express.Router();
 
-userRoute.post('/register',authController.userCreation)
+userRoute.post('/register',authController.register)
 
-userRoute.post('/login',authController.userLoggin)
+userRoute.post('/login',authController.login)
 
 userRoute.post('/getMe/',authMiddleware.getMe , authController.getMe)
 

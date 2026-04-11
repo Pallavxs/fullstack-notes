@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const blackListModel = require("../model/blacklist")
 
 
-async function userCreation(req, res){
+async function register(req, res){
     const {username, email, password } = req.body
 
     const isEmailExist = await userModel.findOne({ email })
@@ -27,16 +27,17 @@ async function userCreation(req, res){
         email: user.email
     },process.env.JWT_Sign)
 
-    cookie("token", token)
+    res.cookie("token", token)
 
     res.status(201).json({
         message: "User is registerd",
-        user
+        user,
+        token
     })
 
 }
 
-async function userLoggin(req,res){
+async function login(req,res){
     const { email , password} = req.body;
 
     const user = await userModel.findOne({ email })
@@ -80,7 +81,7 @@ async function getMe(req,res) {
 async function logOut(req,res) {
     const token = req.cookies.token;
 
-    res.clearCookie(token)
+    res.clearCookie("token")
 
     await blackListModel.create({
         token 
@@ -92,4 +93,4 @@ async function logOut(req,res) {
     
 }
 
-module.exports = {userCreation, userLoggin, getMe, logOut}
+module.exports = {register, login, getMe, logOut}

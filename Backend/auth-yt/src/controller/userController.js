@@ -5,9 +5,6 @@ import config from '../config/config.js';
 import cookie from 'cookie-parser';
 import sessionModel from '../model/session.model.js';
 
-// Why do we hash the refresh token when storing it in the database,
-// but when validating it on refresh, you can't just query by hash directly?
-// Instead, you hash again and look for that hash? Why not store the plain token?
 
 export async function register(req, res) {
     const { username, email, password } = req.body;
