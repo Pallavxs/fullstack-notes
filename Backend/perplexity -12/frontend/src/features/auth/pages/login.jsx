@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hook/useAuth';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
 
     const { handleLogin } = useAuth()
     const navigate = useNavigate();
+
+    const user = useSelector(state => state.auth.user)
+    const loading = useSelector(state => state.auth.loading)
+
+    if(!loading && user){
+      return navigate('/')
+    }
   const [form, setForm] = useState({
     email: '',
     password: '',

@@ -9,7 +9,7 @@ userRoute.post('/register', registerValidator, userController.register)
 
 userRoute.get('/verification-email', userController.verifyEmail)
 
-userRoute.get('/login', loginValidator, userController.login)
+userRoute.post('/login', loginValidator, userController.login)
 
 userRoute.get('/get-me', authMiddlerware, userController.getMe)
 

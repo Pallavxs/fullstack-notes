@@ -158,7 +158,15 @@ export async function login(req, res, next) {
 
         res.cookie("token", token)
 
-        res.status(200).json({ message : "user successfully login"})
+        res.status(200).json({ 
+          message : "user successfully login",
+          success: true,
+          user: {
+            _id: user._id,
+            username: user.username,
+            email: user.email
+          }
+        })
 
     } catch (err) { 
         next(err)
@@ -166,13 +174,21 @@ export async function login(req, res, next) {
 }
 
 export async function getMe(req, res, next) {
-  const userId = req.user.id
+  try {
+    const userId = req.user.id
 
-  if(!userId){
-    throw new Error("User id not exist")
+    if(!userId){
+      throw new Error("User id not exist")
+    }
+
+    const user = await userModel.findById(userId).select('-password');
+
+    res.status(200).json({
+      success: true,
+      message: "User account found",
+      user
+    })
+  } catch (err) {
+    next(err)
   }
-
-  res.status(200).json({
-    message: "User accounte found"
-  })
 }
