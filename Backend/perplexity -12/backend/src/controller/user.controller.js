@@ -29,8 +29,6 @@ export async function register(req, res, next) {
         email : user.email
     }, config.JWT_SECRET, {expiresIn : '1d'})
 
-    res.cookie('token', verifiedEmailToken)
-
     const verifyUrl = `http://localhost:3000/api/auth/verification-email?token=${verifiedEmailToken}`;
 
     await sendEmail(
