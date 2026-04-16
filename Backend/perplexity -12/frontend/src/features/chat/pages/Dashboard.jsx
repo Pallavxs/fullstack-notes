@@ -2,6 +2,9 @@ import { useSelector } from "react-redux";
 import { useChat } from "../hooks/useChat.js";
 import { useEffect, useState } from "react";
 import { Send, ShoppingBag, Zap, Calendar } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 const Dashboard = () => {
   const chat = useChat();
@@ -11,34 +14,28 @@ const Dashboard = () => {
   const chats = useSelector((state) => state.chat.chats);
   const currentChatId = useSelector((state) => state.chat.currentChatId);
 
-  const handleSend = async () => {
+  const handleSend = async (e) => {
+    if (e) e.preventDefault();
     if (!message.trim()) return;
     const msg = message;
     setMessage("");
     await chat.handleSendMessage({ message: msg, chatId: currentChatId });
   };
 
+  const openChat = (chatId) => {
+    chat.handleOpenChat(chatId);
+  };
+
   useEffect(() => {
     chat.initalizeSocketConnection();
+    chat.handleGetChats();
   }, []);
-
-  // Dummy conversations
-  const conversations = [
-    { id: 1, title: "Saving listing", subtitle: "Listings saved to your favorites ❤️" },
-    { id: 2, title: "Flat in plaza España", subtitle: "Let's begin your documents..." },
-    { id: 3, title: "Apartment under $1500", subtitle: "Found 5 matching options" },
-    { id: 4, title: "House with 2 bedrooms", subtitle: "Pulling up listings..." },
-    { id: 5, title: "House investment", subtitle: "Place looks nice but $692,000..." }
-  ];
 
   return (
     <div className="flex h-screen bg-black text-white">
-      
-      {/* Sidebar */}
       <div className="w-64 bg-neutral-950 border-r border-neutral-800 flex flex-col overflow-hidden">
-
         <div className="p-6 border-b border-neutral-800">
-          <h1 className="text-2xl font-bold">zena.</h1>
+          <h1 className="text-2xl font-bold  ">zena</h1>
         </div>
 
         <div className="px-4 py-4">
@@ -50,37 +47,20 @@ const Dashboard = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 space-y-4">
-          
           <div>
-            <h3 className="text-xs text-neutral-500 uppercase mb-3 px-2">Today</h3>
-            {conversations.slice(0, 3).map((conv) => (
-              <div key={conv.id} className="p-3 rounded-lg hover:bg-neutral-900 cursor-pointer">
-                <p className="text-sm font-medium truncate">{conv.title}</p>
-                <p className="text-xs text-neutral-500 mt-1">{conv.subtitle}</p>
-              </div>
+            <h3 className="text-xs text-neutral-500 uppercase mb-3 px-2">
+              Today
+            </h3>
+            {Object.values(chats).map((chat) => (
+              <button
+                key={chat.id}
+                onClick={() => openChat(chat.id)}
+                className="w-full text-left p-3 hover:bg-neutral-900 rounded-lg"
+              >
+                {chat.title}
+              </button>
             ))}
           </div>
-
-          <div>
-            <h3 className="text-xs text-neutral-500 uppercase mb-3 px-2">Yesterday</h3>
-            {conversations.slice(3, 4).map((conv) => (
-              <div key={conv.id} className="p-3 rounded-lg hover:bg-neutral-900 cursor-pointer">
-                <p className="text-sm font-medium truncate">{conv.title}</p>
-                <p className="text-xs text-neutral-500 mt-1">{conv.subtitle}</p>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h3 className="text-xs text-neutral-500 uppercase mb-3 px-2">5 days ago</h3>
-            {conversations.slice(4).map((conv) => (
-              <div key={conv.id} className="p-3 rounded-lg hover:bg-neutral-900 cursor-pointer">
-                <p className="text-sm font-medium truncate">{conv.title}</p>
-                <p className="text-xs text-neutral-500 mt-1">{conv.subtitle}</p>
-              </div>
-            ))}
-          </div>
-
         </div>
 
         <div className="p-4 border-t border-neutral-800">
@@ -90,15 +70,24 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Chat */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
-
-        {currentChatId || chat._id && chats[currentChatId] && chats[currentChatId].messages?.length > 0 ? (
+        {chats[currentChatId]?.messages?.length > 0 ? (
           <div className="flex-1 overflow-y-auto p-8 space-y-6">
             {chats[currentChatId].messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[70%] p-4 rounded-xl whitespace-pre-wrap ${msg.role === 'user' ? 'bg-neutral-800 text-white' : 'bg-neutral-900 border border-neutral-800 text-neutral-300'}`}>
-                  {msg.content}
+              <div
+                key={idx}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`max-w-[70%] p-4 rounded-xl whitespace-pre-wrap ${
+                    msg.role === "user"
+                      ? "bg-neutral-800 text-white"
+                      : "bg-neutral-900 border border-neutral-800 text-neutral-300"
+                  }`}
+                >
+                  <div className="prose prose-invert max-w-none">
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  </div>
                 </div>
               </div>
             ))}
@@ -106,13 +95,15 @@ const Dashboard = () => {
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center px-8 py-12 text-center overflow-y-auto">
             <h2 className="text-5xl font-bold">
-              Hey <span className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Hey{" "}
+              <span className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 {user?.username || "User"}
-              </span>!
+              </span>
+              !
             </h2>
-            <p className="text-3xl text-neutral-500 mb-12">What can I help you today?</p>
-
-            
+            <p className="pt-5 text-3xl text-neutral-500 mb-12">
+              What can I help you today?
+            </p>
           </div>
         )}
 
@@ -124,7 +115,10 @@ const Dashboard = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSend();
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSend();
+                }
               }}
               placeholder="Ask anything..."
               className="flex-1 px-6 py-4 bg-transparent outline-none"
@@ -136,7 +130,6 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );
