@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "@langchain/google-genai": "^2.1.26",
+    "@langchain/mistralai": "^1.0.7",
     "accepts": "^2.0.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",

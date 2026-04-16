@@ -1,4 +1,4 @@
-import { getChats, getMessages, message } from '../controller/chat.controller.js'
+import { getChats, getMessages, message, deleteChat } from '../controller/chat.controller.js'
 import { Router } from 'express'
 import { authMiddlerware } from '../middleware/auth.middlerware.js';
 
@@ -10,4 +10,7 @@ chatRouter.get('/', authMiddlerware, getChats )
 
 chatRouter.get('/:chatId/message', authMiddlerware, getMessages)
 
+chatRouter.delete("/delete/:chatId", authMiddlerware, deleteChat)
+
 export default chatRouter;
+

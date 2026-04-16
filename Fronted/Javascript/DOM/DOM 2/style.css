@@ -67,9 +67,8 @@ button{
 }
 
 html {
-  line-height: 1.15; /* Default line height */
-  -webkit-text-size-adjust: 100%; /* Prevent text size adjustment on mobile */
-}
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%; 
 
 body {
   height: 100%;

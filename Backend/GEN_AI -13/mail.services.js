@@ -20,20 +20,20 @@ transporter.verify((err) => {
     } else console.log('Email server is ready to connect with server')
 })
 
-const sendEmail = async (to, subject, text, html) => {
-    try {
-        const info = await transporter.sendMail({
-            from: process.env.GOOGLE_USER,
-            to,
-            subject,
-            text,
-            html 
-        });
+const sendEmail = async ({ to, subject, html }) => {
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.GOOGLE_USER,
+      to,
+      subject,
+      html,
+      text: html.replace(/<[^>]+>/g, "") 
+    });
 
-        console.log(`Message sent: %s ${info.messageId}`);
-        console.log(`Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`);
-    } catch (err) {
-        console.error("Error sending email: ", err)
-    }
-}
+    return `Email sent to ${to} with subject "${subject}"`;
+  } catch (err) {
+    console.error("Error sending email: ", err);
+    return `Failed to send email: ${err.message}`;
+  }
+};
 export default sendEmail;

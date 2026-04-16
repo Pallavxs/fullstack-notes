@@ -4,7 +4,8 @@ import chatModel from "../model/chat.model.js";
 
 export async function message(req, res, next) {
   try {
-    const { message, chat: chatId } = req.body;
+    
+    let { message, chat: chatId } = req.body;
 
     let title = null, chat = null;
 
@@ -35,8 +36,6 @@ export async function message(req, res, next) {
       content: result,
       role: "ai",
     });
-
-    console.log(messages);
 
     res.status(201).json({
       title,
@@ -85,4 +84,26 @@ export async function getMessages(req, res, next) {
   } catch (err) {
     next(err);
   }
+}
+
+export async function deleteChat(req, res, next) {
+  
+  const { chatId } = req.params;
+
+  const chat = await chatModel.findOneAndDelete({
+    _id : chatId,
+    user : req.user.id
+  })
+
+  await messageModel.deleteMany({
+    chat : chatId
+  });
+
+  if(!chat){
+    throw new Error(404).json({ message: "Chat not found"})
+  }
+
+  res.status(200).json({
+    message : "Chat deleted successfully"
+  })
 }

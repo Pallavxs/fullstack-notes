@@ -1,38 +1,4 @@
-import { useSelector } from "react-redux";
-import { useChat } from "../hooks/useChat.js";
-import { useEffect, useState } from "react";
-import { Send, ShoppingBag, Zap, Calendar } from "lucide-react";
-
-const Dashboard = () => {
-  const chat = useChat();
-  const [message, setMessage] = useState("");
-
-  const user = useSelector((state) => state.auth.user);
-  const chats = useSelector((state) => state.chat.chats);
-  const currentChatId = useSelector((state) => state.chat.currentChatId);
-
-  const handleSend = async () => {
-    if (!message.trim()) return;
-    const msg = message;
-    setMessage("");
-    await chat.handleSendMessage({ message: msg, chatId: currentChatId });
-  };
-
-  useEffect(() => {
-    chat.initalizeSocketConnection();
-  }, []);
-
-  // Dummy conversations
-  const conversations = [
-    { id: 1, title: "Saving listing", subtitle: "Listings saved to your favorites ❤️" },
-    { id: 2, title: "Flat in plaza España", subtitle: "Let's begin your documents..." },
-    { id: 3, title: "Apartment under $1500", subtitle: "Found 5 matching options" },
-    { id: 4, title: "House with 2 bedrooms", subtitle: "Pulling up listings..." },
-    { id: 5, title: "House investment", subtitle: "Place looks nice but $692,000..." }
-  ];
-
-  return (
-    <div className="flex h-screen bg-black text-white">
+<div className="flex h-screen bg-black text-white">
       
       {/* Sidebar */}
       <div className="w-64 bg-neutral-950 border-r border-neutral-800 flex flex-col overflow-hidden">
@@ -91,45 +57,42 @@ const Dashboard = () => {
       </div>
 
       {/* Main Chat */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
+      <div className="flex-1 flex flex-col">
 
-        {currentChatId || chat._id && chats[currentChatId] && chats[currentChatId].messages?.length > 0 ? (
-          <div className="flex-1 overflow-y-auto p-8 space-y-6">
-            {chats[currentChatId].messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[70%] p-4 rounded-xl whitespace-pre-wrap ${msg.role === 'user' ? 'bg-neutral-800 text-white' : 'bg-neutral-900 border border-neutral-800 text-neutral-300'}`}>
-                  {msg.content}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex-1 flex flex-col items-center justify-center px-8 py-12 text-center overflow-y-auto">
-            <h2 className="text-5xl font-bold">
-              Hey <span className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                {user?.username || "User"}
-              </span>!
-            </h2>
-            <p className="text-3xl text-neutral-500 mb-12">What can I help you today?</p>
+        <div className="flex-1 flex flex-col items-center justify-center px-8 py-12 text-center">
+          <h2 className="text-5xl font-bold">
+            Hey <span className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              {user?.name || "User"}
+            </span>!
+          </h2>
+          <p className="text-3xl text-neutral-500 mb-12">What can I help you today?</p>
 
-            
+          <div className="grid grid-cols-3 gap-4">
+            {quickActions.map((action) => {
+              const Icon = action.icon;
+              return (
+                <button key={action.id} className="p-6 border border-neutral-800 rounded-lg group hover:bg-neutral-950">
+                  <Icon className="w-6 h-6 mb-3 text-neutral-400 group-hover:text-blue-400" />
+                  <span className="text-sm text-neutral-300 group-hover:text-white">
+                    {action.label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-        )}
+        </div>
 
         {/* Input */}
-        <div className="px-8 pb-8 pt-4">
+        <div className="px-8 pb-8">
           <div className="flex items-center bg-neutral-950 border border-neutral-800 rounded-full">
             <input
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSend();
-              }}
               placeholder="Ask anything..."
               className="flex-1 px-6 py-4 bg-transparent outline-none"
             />
-            <button className="pr-2" onClick={handleSend}>
+            <button className="pr-2">
               <div className="p-2 bg-white rounded-full">
                 <Send className="w-5 h-5 text-black" />
               </div>
@@ -139,7 +102,3 @@ const Dashboard = () => {
 
       </div>
     </div>
-  );
-};
-
-export default Dashboard;

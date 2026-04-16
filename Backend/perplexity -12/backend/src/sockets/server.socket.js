@@ -1,4 +1,3 @@
-import { Socket } from "dgram";
 import { Server } from "socket.io"
 
 let io;

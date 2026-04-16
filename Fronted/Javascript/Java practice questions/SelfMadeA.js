@@ -253,7 +253,11 @@ anonymousFun()
 
 // Callback function ka example banao (setTimeout allowed).
 
-function callBack(name, callback) {
+
+const setTimeout = setTimeout(function(){
+  console.log("Timeout")
+},2000) 
+function callBack( setTimeout) {
 
 }
 

@@ -1,4 +1,4 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatMistralAI } from '@langchain/mistralai'
 import { createAgent, HumanMessage, tool } from "langchain";
 import readline from "readline/promises";
 import sendEmail from "./mail.services.js";
@@ -23,9 +23,9 @@ const rl = readline.createInterface({
     output : process.stdout
 });
 
-const model = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash-lite",
-  apiKey: process.env.apiKey
+const model = new ChatMistralAI({
+  model: "mistral-small-latest",
+  apiKey: process.env.MISTRAL_API_KEY
 });
 
 const agent = createAgent({
