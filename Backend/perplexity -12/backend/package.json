@@ -6,6 +6,7 @@
   "dependencies": {
     "@langchain/google-genai": "^2.1.26",
     "@langchain/mistralai": "^1.0.7",
+    "@tavily/core": "^0.7.2",
     "accepts": "^2.0.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",
@@ -109,7 +110,8 @@
     "vary": "^1.1.2",
     "webidl-conversions": "^7.0.0",
     "whatwg-url": "^14.2.0",
-    "wrappy": "^1.0.2"
+    "wrappy": "^1.0.2",
+    "zod": "^4.3.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

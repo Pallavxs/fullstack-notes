@@ -1,31 +1,52 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import config from "../config/config.js";
-import { HumanMessage, SystemMessage, AIMessage } from 'langchain'
+import { HumanMessage, SystemMessage, AIMessage, tool, createAgent } from 'langchain'
 import { ChatMistralAI } from '@langchain/mistralai'
-
+import { searchInternet } from "./internet.service.js";
+import * as z from "zod"
 
 const geminiModel = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash-lite",
+  model: "gemini-flash-latest",
   apiKey: config.GOOGLE_API_KEY
 });
 
 const mistralModel = new ChatMistralAI({
-  model: "mistral-small-latest",
+  model: "mistral-medium-latest",
   apiKey: config.MISTRAL_API_KEY
 });
 
+const searchInternettool = tool(searchInternet, {
+    name: "searchInternet",
+    description: "Use this tool to get to the latest information from Internet",
+    schema: z.object({
+        query: z.string().describe("The search query to look up on internet")
+    })
+})
 
+const agent = createAgent({
+    model: mistralModel,
+    tools: [searchInternettool]
+})
 
 export async function genrateResponse(messages) {
-    const response = await mistralModel.invoke(messages.map(msg => {
+    const response = await agent.invoke({
+        messages: [
+        new SystemMessage(`
+            You are a helpful and precise assistant for answering questions.
+            if you don't know the answer, say you don't know.
+            if the question requires up-to-date information, use the "searchInternet" tool to get the latest information from the internet and 
+            then answer based on the search results.
+            `)    
+        ,...(messages.map(msg => {
         if(msg.role == 'user'){
             return new HumanMessage(msg.content)
         } else if (msg.role == 'ai') {
             return new AIMessage(msg.content)
         }
-    }))
+    }))]
+    });
     
-    return response.text;
+    return response.messages[ response.messages.length - 1].text;
 }
 
 export async function generateChatTitle(message) {

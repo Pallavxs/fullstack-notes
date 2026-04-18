@@ -48,8 +48,8 @@ const Dashboard = () => {
 
         <div className="flex-1 overflow-y-auto px-4 space-y-4">
           <div>
-            <h3 className="text-xs text-neutral-500 uppercase mb-3 px-2">
-              Today
+            <h3 className="mt-5 text-xs text-neutral-500 bold  uppercase mb-3 px-2">
+              Recent conversations
             </h3>
             {Object.values(chats).map((chat) => (
               <button
@@ -72,7 +72,7 @@ const Dashboard = () => {
 
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
         {chats[currentChatId]?.messages?.length > 0 ? (
-          <div className="flex-1 overflow-y-auto p-8 space-y-6">
+          <div  id="messagemain"  className="flex-1 overflow-y-auto p-8 space-y-6">
             {chats[currentChatId].messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -81,12 +81,12 @@ const Dashboard = () => {
                 <div
                   className={`max-w-[70%] p-4 rounded-xl whitespace-pre-wrap ${
                     msg.role === "user"
-                      ? "bg-neutral-800 text-white"
-                      : "bg-neutral-900 border border-neutral-800 text-neutral-300"
+                      ? " text-white "
+                      : " text-300 "
                   }`}
                 >
                   <div className="prose prose-invert max-w-none">
-                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    <ReactMarkdown remarkPlugins={remarkGfm}>{msg.content}</ReactMarkdown>
                   </div>
                 </div>
               </div>
