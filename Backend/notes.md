@@ -152,3 +152,128 @@ Examples:
 ---
 
 ##
+
+
+
+                        🧠 ---------------------- TypeScript — Full Cohort Notes -----------------------------
+
+
+🔹 1. What is TypeScript?
+
+TypeScript is a superset of JavaScript that adds:
+
+Static typing 🧩
+Better tooling (autocomplete, error detection)
+Improved scalability for large apps
+let name: string = "Pallav";
+🔹 2. Why TypeScript?
+Catches errors before runtime ⚠️
+Improves code readability
+Great for large projects
+Strong IDE support
+🔹 3. Basic Types
+let age: number = 21;
+let isStudent: boolean = true;
+let username: string = "dev";
+Arrays
+let numbers: number[] = [1, 2, 3];
+let names: string[] = ["A", "B"];
+Tuple
+let user: [string, number] = ["Pallav", 21];
+🔹 4. Any vs Unknown
+let data: any = "hello";   // no type checking ❌
+let value: unknown = "hi"; // safer ✅
+🔹 5. Functions
+function add(a: number, b: number): number {
+  return a + b;
+}
+Optional Parameter
+function greet(name?: string) {
+  return "Hello " + name;
+}
+🔹 6. Objects
+let user: { name: string; age: number } = {
+  name: "Pallav",
+  age: 21
+};
+🔹 7. Type Alias
+type User = {
+  name: string;
+  age: number;
+};
+
+let u1: User = { name: "Dev", age: 22 };
+🔹 8. Interface
+interface User {
+  name: string;
+  age: number;
+}
+
+let u2: User = { name: "Alex", age: 25 };
+🔹 9. Union Types
+let id: number | string;
+id = 101;
+id = "abc";
+🔹 10. Literal Types
+let direction: "left" | "right";
+direction = "left";
+🔹 11. Enums
+enum Role {
+  Admin,
+  User,
+  Guest
+}
+
+let r: Role = Role.Admin;
+🔹 12. Type Assertion
+let value: any = "hello";
+let len = (value as string).length;
+🔹 13. Classes
+class Person {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  greet() {
+    console.log("Hello " + this.name);
+  }
+}
+🔹 14. Access Modifiers
+class User {
+  public name: string;
+  private age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+🔹 15. Generics
+function identity<T>(value: T): T {
+  return value;
+}
+
+identity<string>("hello");
+🔹 16. Modules (Import / Export)
+// export
+export const name = "TS";
+
+// import
+import { name } from "./file";
+🔹 17. tsconfig.json (Important)
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true
+  }
+}
+🔹 18. Compile TypeScript
+tsc index.ts
+🔹 19. Key Difference: JS vs TS
+Feature	JavaScript	TypeScript
+Typing	Dynamic	Static
+Errors	Runtime	Compile-time
+Scale	Hard	Easy

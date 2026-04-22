@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useChat } from "../hooks/useChat.js";
 import { useEffect, useState } from "react";
-import { Send, ShoppingBag, Zap, Calendar } from "lucide-react";
+import { Send, ShoppingBag, Zap, Calendar, Search, Plus } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -38,12 +38,16 @@ const Dashboard = () => {
           <h1 className="text-2xl font-bold  ">zena</h1>
         </div>
 
-        <div className="px-4 py-4">
-          <input
-            type="text"
-            placeholder="Search conversation"
-            className="w-full px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-sm focus:outline-none placeholder-neutral-600"
-          />
+        <div className="flex flex-col-reverse p-4 space-y-2">
+          <button className="flex items-center justify-center space-x-2 w-full px-3 py-2 text-sm font-semibold uppercase bg-neutral-900 hover:bg-neutral-800 rounded-lg transition-colors">
+            <Search className="w-4 h-4" />
+            <span>Search</span>
+          </button>
+
+          <button className="flex items-center justify-center space-x-2 w-full px-3 py-2 text-sm font-semibold bg-neutral-900 hover:bg-neutral-800 rounded-lg transition-colors">
+            <Plus className="w-4 h-4" />
+            <span>New Chat</span>
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 space-y-4">
