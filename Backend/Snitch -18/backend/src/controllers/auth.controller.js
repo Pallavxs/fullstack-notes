@@ -21,7 +21,7 @@ async function sendTokenResponse(user, res, message) {
             email: user.email,
             contact: user.contact,
             fullname: user.fullname,
-            role: user.role
+            role: user.role,
         }
     })
 }
@@ -51,4 +51,35 @@ export async function register(req, res) {
         console.error("Error during registration:", error);
         res.status(500).json({ message: "Internal server error" });
     }
+}
+
+export async function login(req, res) {
+    const { email, password } = req.body;
+
+    try{
+        const user = await userModel.findOne({ email });
+
+        if(!user) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        const isMatch = await user.comparePassword(password);
+
+        if(!isMatch) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        await sendTokenResponse(user, res, "Login successful");
+
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export const googleCallBack = async (req, res) => {
+
+    console.log(req.user);
+    res.redirect("http://localhost:5173/")
+
 }

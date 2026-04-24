@@ -25,3 +25,12 @@ export const registerValidator = [
 
         validateRequest
 ]
+
+export const loginValidator = [
+    body('email')
+        .isEmail().withMessage('Invalid email format'),
+    body('password')
+        .notEmpty().withMessage('Password is required'),
+
+    validateRequest
+]
