@@ -5,15 +5,16 @@ import { useSelector } from 'react-redux';
 
 const Login = () => {
 
-    const { handleLogin } = useAuth()
-    const navigate = useNavigate();
+  const { handleLogin } = useAuth()
+  const navigate = useNavigate();
 
-    const user = useSelector(state => state.auth.user)
-    const loading = useSelector(state => state.auth.loading)
+  const user = useSelector(state => state.auth.user)
+  const loading = useSelector(state => state.auth.loading)
 
-    if(!loading && user){
-      return navigate('/')
-    }
+  if (!loading && user) {
+    return navigate('/')
+  }
+
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -24,12 +25,12 @@ const Login = () => {
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const payload = {
-        email : form.email,
-        password : form.password
+      email: form.email,
+      password: form.password
     }
 
     await handleLogin(payload)
