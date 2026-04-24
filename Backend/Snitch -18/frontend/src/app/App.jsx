@@ -1,15 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { RouterProvider } from 'react-router'
+import { routes } from './app.routes.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1 className='text-3xl font-bold underline'>Yooo</h1>
+      <RouterProvider router={routes} />
     </>
   )
 }

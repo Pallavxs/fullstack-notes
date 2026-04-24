@@ -7,7 +7,8 @@
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.5.0",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "react-router": "^7.14.2"
   },
   "name": "snitch--18",
   "version": "1.0.0",
