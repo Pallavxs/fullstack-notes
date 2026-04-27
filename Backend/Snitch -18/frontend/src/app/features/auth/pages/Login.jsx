@@ -21,12 +21,17 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin({
-      email: formData.email,
-      password: formData.password
-    });
-
-    navigate("/");
+    try {
+      const user = await handleLogin({email: formData.email, password: formData.password});
+    if(user.role == 'buyer'){
+      navigate("/");
+    } else if(user.role == 'seller'){
+      navigate("/seller/dashboard");
+    }
+    } catch (error) {
+      console.error("Login failed:", error);
+      return;
+    }
   };
 
   return (
@@ -151,6 +156,10 @@ const Login = () => {
               </button>
             </div>
           </form>
+
+          <a href="/api/auth/google" className="block text-center mt-8 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:text-yellow-500 transition-colors duration-300">
+             — OR Continue With Google —
+           </a>
 
           <div className="mt-12 text-center text-[10px] sm:text-xs tracking-widest uppercase font-medium text-neutral-500">
             <p>

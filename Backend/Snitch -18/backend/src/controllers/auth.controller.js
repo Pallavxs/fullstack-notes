@@ -78,8 +78,40 @@ export async function login(req, res) {
 }
 
 export const googleCallBack = async (req, res) => {
+    const { id, displayName, emails, photos } = req.user;
+    const email = req.user.emails[0].value;
+    const profilePic = req.user.photos[0].value;
 
-    console.log(req.user);
-    res.redirect("http://localhost:5173/")
+    let user = await userModel.findOne({ email });
 
+    if(!user) {
+        user = await userModel.create({
+            email,
+            googleId: id,
+            fullname: displayName
+        })
+    }
+
+    const token = jwt.sign({ id: user._id }, config.JWT_SECRET, { expiresIn: "7d" });
+    res.cookie("token", token);
+    res.redirect('http://localhost:5173/');
+}
+
+export const getMe = async (req, res) => {  
+    const user = req.user;
+
+    if(!user) {
+        return res.status(404).json({ message: "User not found" });
+    }   
+
+    res.status(200).json({
+        success: true,
+        user: {
+            id: user._id,
+            email: user.email,
+            contact: user.contact,  
+            fullname: user.fullname,
+            role: user.role,
+        }
+    })
 }

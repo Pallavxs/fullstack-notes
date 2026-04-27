@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* ── Global base ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Utility: hide scrollbar ── */
+.scrollbar-hide {
+  -ms-overflow-style: none;       /* IE / Edge */
+  scrollbar-width: none;          /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;                  /* Chrome / Safari */
+}

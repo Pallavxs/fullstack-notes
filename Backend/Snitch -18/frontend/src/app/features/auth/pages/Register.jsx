@@ -180,9 +180,9 @@ const Register = () => {
             </div>
           </form>
 
-           <a href="/api/auth/google" className="block text-center mt-8 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:text-yellow-500 transition-colors duration-300">
-             — OR Continue With Google —
-           </a>
+          <a href="/api/auth/google" className="block text-center mt-8 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-neutral-400 hover:text-yellow-500 transition-colors duration-300">
+            — OR Continue With Google —
+          </a>
 
           <div className="mt-12 text-center text-[10px] sm:text-xs tracking-widest uppercase font-medium text-neutral-500">
             <p>
