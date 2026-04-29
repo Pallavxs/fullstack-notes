@@ -98,7 +98,7 @@ const FeaturedPanel = ({ product, onNavigate }) => {
                 {/* Actions */}
                 <div className="flex-shrink-0 flex gap-3">
                     <button
-                        onClick={() => onNavigate('/seller/create-product')}
+                        onClick={() => onNavigate('/seller/product/' + product._id)}
                         className="flex-1 border border-[#222] hover:border-[#FFD700]/40 text-[#555] hover:text-[#999] text-[10px] font-bold tracking-[0.25em] uppercase py-3 transition-all duration-200"
                     >
                         Edit Product

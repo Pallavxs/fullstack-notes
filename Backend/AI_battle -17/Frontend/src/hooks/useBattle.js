@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:3000/invoke';
+const API_BASE = '/invoke';
 const HISTORY_KEY = 'ai_battle_history';
 
 function loadHistory() {
